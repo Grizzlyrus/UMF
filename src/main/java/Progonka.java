@@ -21,7 +21,6 @@ public class Progonka {
     }
 
     public void setCurT(double curT) {
-
         this.curT = curT;
         Tstep = curT / K;
 
@@ -69,6 +68,13 @@ public class Progonka {
 
         this.genMatrix();
         double f[] = new double[I];
+        if(Tstep == 0.0){
+            for (int i = 0; i < I; i++) {
+                f[i] = 0.1 * (Math.cos(Math.PI * Xstep * (i + 1) / l) + 1);
+            }
+        return f;
+        }
+
         for (int i = 0; i < I; i++) {
             f[i] = 0.1 * (Math.cos(Math.PI * Xstep * (i + 1) / l) + 1) / Tstep;
         }

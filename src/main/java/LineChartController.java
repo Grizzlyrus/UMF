@@ -136,6 +136,7 @@ public class LineChartController {
 
     @FXML
     private void initialize() {
+        RadBut3.setSelected(true);
         RadBut3.setToggleGroup(group1);
         RadBut4.setToggleGroup(group1);
 
