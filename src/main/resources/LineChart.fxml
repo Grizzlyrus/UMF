@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<AnchorPane prefHeight="414.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LineChartController">
+<AnchorPane prefHeight="433.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LineChartController">
    <children>
       <SplitPane dividerPositions="0.5836120401337793" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -33,6 +33,7 @@
                       <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -70,13 +71,13 @@
                               <Insets left="20.0" right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label text="Error" GridPane.rowIndex="6" />
+                        <Label text="Погр." GridPane.rowIndex="6" />
                         <TextField fx:id="FieldError" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets left="35.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="CalcN" mnemonicParsing="false" onMouseClicked="#CalcNButtonPress" prefWidth="95.0" text="Calc N" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Button fx:id="CalcN" mnemonicParsing="false" onMouseClicked="#CalcNButtonPress" prefWidth="95.0" text="Расчет N" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <Label fx:id="Xlabel" text="X " GridPane.rowIndex="3" />
                         <Label fx:id="Tlabel" text="T " GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <opaqueInsets>
@@ -87,18 +88,18 @@
                            </GridPane.margin>
                         </Label>
                         <Label fx:id="Nlabel" text="N " GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="Errorlabel" text="Error " GridPane.rowIndex="4" />
-                        <Button fx:id="SetNbutton" mnemonicParsing="false" onMouseClicked="#SetNButtonPress" prefWidth="95.0" text="Set N" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <Label fx:id="Errorlabel" text="Погр. " GridPane.rowIndex="4" />
+                        <Button fx:id="SetNbutton" mnemonicParsing="false" onMouseClicked="#SetNButtonPress" prefWidth="95.0" text="Задать N" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <GridPane.margin>
                               <Insets bottom="12.0" top="12.0" />
                            </GridPane.margin>
                         </Button>
-                        <Label text="N" textAlignment="CENTER" GridPane.rowIndex="7">
+                        <Label text="N" textAlignment="CENTER" GridPane.rowIndex="8">
                            <GridPane.margin>
                               <Insets bottom="10.0" top="12.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="FieldN" prefHeight="29.0" prefWidth="70.0" GridPane.rowIndex="7">
+                        <TextField fx:id="FieldN" prefHeight="29.0" prefWidth="70.0" GridPane.rowIndex="8">
                            <GridPane.margin>
                               <Insets bottom="12.0" left="20.0" right="10.0" top="12.0" />
                            </GridPane.margin>
@@ -108,42 +109,44 @@
                               <Insets top="30.0" />
                            </padding>
                         </Separator>
-                        <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                        <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
                            <GridPane.margin>
                               <Insets bottom="30.0" />
                            </GridPane.margin>
                         </Separator>
-                        <RadioButton fx:id="RadBut1" mnemonicParsing="false" onMouseClicked="#SetRadBut1Press" text="An. solution" GridPane.rowIndex="11" />
-                        <RadioButton fx:id="RadBut2" mnemonicParsing="false" onMouseClicked="#SetRadBut2Press" text="Num. solution" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                        <Separator prefHeight="0.0" prefWidth="80.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                        <RadioButton fx:id="RadBut1" mnemonicParsing="false" onMouseClicked="#SetRadBut1Press" text="Аналит. решение" GridPane.rowIndex="12" />
+                        <RadioButton fx:id="RadBut2" mnemonicParsing="false" onMouseClicked="#SetRadBut2Press" text="Числ. решение" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                        <Separator prefHeight="0.0" prefWidth="80.0" GridPane.columnSpan="2" GridPane.rowIndex="9">
                            <GridPane.margin>
                               <Insets bottom="30.0" />
                            </GridPane.margin>
                         </Separator>
-                        <TextField fx:id="FieldK" prefHeight="29.0" prefWidth="70.0" GridPane.rowIndex="10">
+                        <TextField fx:id="FieldK" prefHeight="29.0" prefWidth="70.0" GridPane.rowIndex="11">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="25.0" right="10.0" top="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="FieldI" prefHeight="29.0" prefWidth="70.0" GridPane.rowIndex="9">
+                        <TextField fx:id="FieldI" prefHeight="29.0" prefWidth="70.0" GridPane.rowIndex="10">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="25.0" right="10.0" top="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label text="I" textAlignment="CENTER" GridPane.rowIndex="9" />
-                        <Label text="K" GridPane.rowIndex="10" />
-                        <Button fx:id="SetIbutton" mnemonicParsing="false" onMouseClicked="#SetIButtonPress" prefWidth="95.0" text="Set I" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                        <Button fx:id="SetKbutton" mnemonicParsing="false" onMouseClicked="#SetKButtonPress" prefWidth="95.0" text="Set K" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                        <Label text="I" textAlignment="CENTER" GridPane.rowIndex="10" />
+                        <Label text="K" GridPane.rowIndex="11" />
+                        <Button fx:id="SetIbutton" mnemonicParsing="false" onMouseClicked="#SetIButtonPress" prefWidth="95.0" text="Задать I" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Button fx:id="SetKbutton" mnemonicParsing="false" onMouseClicked="#SetKButtonPress" prefWidth="95.0" text="Задать K" GridPane.columnIndex="1" GridPane.rowIndex="11">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin></Button>
-                        <Label fx:id="Ilabel" text="I" GridPane.rowIndex="8" />
-                        <Label fx:id="Klabel" text="K" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label fx:id="Ilabel" text="I" GridPane.rowIndex="9" />
+                        <Label fx:id="Klabel" text="K" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                         <Separator prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="11">
                            <GridPane.margin>
                               <Insets bottom="28.0" />
                            </GridPane.margin>
                         </Separator>
+                        <RadioButton fx:id="RadBut3" mnemonicParsing="false" text="Практ. оценка" onMouseClicked="#SetRadBut3Press" GridPane.rowIndex="7" />
+                        <RadioButton fx:id="RadBut4" mnemonicParsing="false" text="Теор. оценка" GridPane.columnIndex="1" onMouseClicked="#SetRadBut4Press" GridPane.rowIndex="7" />
                      </children>
                   </GridPane>
                </children>

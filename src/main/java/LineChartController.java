@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 /**
- * Created by ������ on 29.11.2015.
+ * Created by ������ on 29.11.2015.
  */
 public class LineChartController {
     private final static double l = 30.0;
@@ -37,7 +37,11 @@ public class LineChartController {
 
     final ToggleGroup group = new ToggleGroup();
 
-    boolean selector = true;
+    final ToggleGroup group1 = new ToggleGroup();
+
+    boolean selector1 = true;
+
+    boolean selector2 = true;
 
     @FXML
     private Label Xlabel;
@@ -114,6 +118,12 @@ public class LineChartController {
     @FXML
     private Label Ilabel;
 
+    @FXML
+    private RadioButton RadBut3;
+
+    @FXML
+    private RadioButton RadBut4;
+
     public LineChartController(){
         Solution sol = new Solution(l,D,H,Beta);
 //        sol.CalcN();
@@ -126,6 +136,11 @@ public class LineChartController {
 
     @FXML
     private void initialize() {
+        RadBut3.setToggleGroup(group1);
+        RadBut4.setToggleGroup(group1);
+
+
+
         field.setDisable(true);
         Button2.setDisable(true);
         Button1.setDisable(true);
@@ -135,7 +150,7 @@ public class LineChartController {
         RadBut1.setToggleGroup(group);
         RadBut2.setToggleGroup(group);
         RadBut1.setSelected(true);
-        selector = true;
+        selector1 = true;
 
         SetIbutton.setDisable(true);
         SetKbutton.setDisable(true);
@@ -160,7 +175,7 @@ public class LineChartController {
             curT.setText(((Double) t).toString());
             XYChart.Series series1 = new XYChart.Series();
 
-            series1.setName("An. sol. t= " + t);
+            series1.setName("Ан. реш. t= " + t);
             ObservableList<XYChart.Data> datas = FXCollections.observableArrayList();
 
             for (double i = 0; i < l; i += 0.05) {
@@ -176,7 +191,7 @@ public class LineChartController {
             double x[] = prog.solveMatrix();
             XYChart.Series series2 = new XYChart.Series();
 
-            series2.setName("Num. sol. t= " + t);
+            series2.setName("Числ. реш. t= " + t);
             ObservableList<XYChart.Data> datas = FXCollections.observableArrayList();
             for(int i=0; i<x.length; i++){
                 datas.add(new XYChart.Data(i*prog.getXstep(),x[i]));
@@ -189,7 +204,7 @@ public class LineChartController {
 
     @FXML
     public void SetRadBut1Press(){
-        selector = true;
+        selector1 = true;
         SetIbutton.setDisable(true);
         SetKbutton.setDisable(true);
         CalcN.setDisable(false);
@@ -200,6 +215,9 @@ public class LineChartController {
         FieldT.setDisable(false);
         FieldX.setDisable(false);
         FieldN.setDisable(false);
+        RadBut3.setDisable(false);
+        RadBut4.setDisable(false);
+
         if(n!=0){
             field.setDisable(false);
             Button2.setDisable(false);
@@ -214,7 +232,7 @@ public class LineChartController {
 
     @FXML
     public void SetRadBut2Press(){
-        selector = false;
+        selector1 = false;
         CalcN.setDisable(true);
         SetNbutton.setDisable(true);
         SetIbutton.setDisable(false);
@@ -225,6 +243,8 @@ public class LineChartController {
         FieldT.setDisable(true);
         FieldX.setDisable(true);
         FieldN.setDisable(true);
+        RadBut3.setDisable(true);
+        RadBut4.setDisable(true);
 
         if(i!=0 && k!=0){
             field.setDisable(false);
@@ -239,16 +259,28 @@ public class LineChartController {
     }
 
     @FXML
+    public void SetRadBut3Press() {
+        FieldX.setDisable(false);
+        selector2 = true;
+    }
+
+    @FXML
+    public void SetRadBut4Press() {
+        FieldX.setDisable(true);
+        selector2 = false;
+    }
+
+    @FXML
     public void DrawButtonPress(){
         Double t;
         try {
             t = new Double(field.getCharacters().toString());
-            if(!isFind(-10) && t>=0 && selector) {
+            if(!isFind(-10) && t>=0 && selector1) {
                 currentT = t;
                 allTvalues.add(t);
-                initGraph(t,selector);
-            } else if (!isFind(-10) && t>=0 && !selector){
-                initGraph(t,selector);
+                initGraph(t, selector1);
+            } else if (!isFind(-10) && t>=0 && !selector1){
+                initGraph(t, selector1);
             }
             else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -291,15 +323,27 @@ public class LineChartController {
         Double x,t, error;
         try {
             t = new Double(FieldT.getCharacters().toString());
-            x = new Double(FieldX.getCharacters().toString());
+            if(selector2 == true) {
+                x = new Double(FieldX.getCharacters().toString());
+            }else{
+                x=0.0;
+            }
             error = new Double(FieldError.getCharacters().toString());
 
             if(t>=0&&x>=0&&x<=l&&error>0 && error<0.2) {
                 CurCalcNT = t;
-                CurCalcNX = x;
+                if(selector2 == true){
+                    CurCalcNX = x;
+                }
+
                 epsilon = error;
-                sol.CalcN(x, t, error);
-                Xlabel.setText("X: "+x);
+
+                if(selector2 == true) {
+                    sol.CalcN1(x, t, error);
+                    Xlabel.setText("X: " + x);
+                }else{
+                    sol.CalcN(t,error);
+                }
                 Tlabel.setText("T: "+t);
                 Errorlabel.setText("Error: "+epsilon);
                 Nlabel.setText("N: "+ sol.getN());

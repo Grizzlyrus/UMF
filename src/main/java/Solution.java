@@ -93,7 +93,7 @@ public class Solution {
         return sum;
     }
 
-    public void CalcN(double x, double t, double epsilon){
+    public void CalcN1(double x, double t, double epsilon){
         this.epsilon=epsilon;
         int step = 256;
         int k=256;
@@ -141,7 +141,11 @@ public class Solution {
         this.n = k;
     }
 
-    public void CalcN1(double x, double t, double epsilon){
+    public double error(int n, double t){
+        return 0.2*H*l*l/(D*Math.PI*Math.PI*Math.PI*n*n*t)*Math.exp(t*Beta-2.0*D*Math.PI*Math.PI*n*t/(l*l))*(1.0+l/(Math.PI*n));
+    }
+
+    public void CalcN(double t, double epsilon){
         this.epsilon=epsilon;
         int step = 256;
         int k=256;
@@ -152,42 +156,41 @@ public class Solution {
             a.solution(k);
             this.setMu(a.getMu());
         }
-        double temp1=sumU(x,t,k-step);
-        double temp2=sumU(x,t,k);
-        while (Math.abs(temp2-temp1)>epsilon){
-            step*=2;
+        double temp1 = error(k,t);
+
+        while (Math.abs(temp1)>epsilon){
             k+=step;
             if(k>=n1) {
                 a.solution(k);
                 this.setMu(a.getMu());
             }
-            temp1=temp2;
-            temp2=sumU(x,t,k);
+
+            temp1 = error(k,t);
         }
         this.n1=k;
 
-        if(k!=step) {
-            k = k - step - step / 4;
-            step/=8;
-        }else{
+
             k=k-step/2;
-            step/=2;
-        }
-        temp1=sumU(x,t,k);
+
+        step/=2;
+        temp1 = error(k,t);
         while (step>1){
-            if(Math.abs(temp2-temp1)<epsilon){
+            if(Math.abs(temp1)<epsilon){
                 step/=2;
                 k-=step;
-                temp1=sumU(x,t,k);
+                temp1 = error(k,t);
             }else{
                 step/=2;
                 k+=step;
-                temp1=sumU(x,t,k);
+                temp1 = error(k,t);
             }
         }
 
+        if(k==1){k++;}
+
         this.n = k;
     }
+
 
     public int getN(){
         return n;
