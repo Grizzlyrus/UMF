@@ -8,11 +8,11 @@
 
 <AnchorPane prefHeight="433.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LineChartController">
    <children>
-      <SplitPane dividerPositions="0.5836120401337793" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.5836120401337793" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="100.0" minWidth="100.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <LineChart fx:id="Chart" minHeight="-Infinity" minWidth="-Infinity" prefHeight="298.0" prefWidth="410.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                  <LineChart fx:id="Chart" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="410.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                     <xAxis>
                       <NumberAxis side="BOTTOM" fx:id="x" />
                     </xAxis>
@@ -24,7 +24,7 @@
             </AnchorPane>
           <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="240.0">
                <children>
-                  <GridPane layoutX="-10.0" layoutY="8.0" prefHeight="298.0" prefWidth="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+                  <GridPane layoutX="-10.0" layoutY="8.0" prefHeight="350.0" prefWidth="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="-Infinity" prefWidth="108.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="-Infinity" prefWidth="117.0" />

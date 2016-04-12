@@ -346,7 +346,7 @@ public class LineChartController {
                     sol.CalcN(t,error);
                 }
                 Tlabel.setText("T: "+t);
-                Errorlabel.setText("Error: "+epsilon);
+                Errorlabel.setText("Погр. : "+epsilon);
                 Nlabel.setText("N: "+ sol.getN());
                 n=sol.getN();
 
@@ -380,7 +380,7 @@ public class LineChartController {
                 sol.setN(n);
                 Xlabel.setText("X: ");
                 Tlabel.setText("T: ");
-                Errorlabel.setText("Error: ");
+                Errorlabel.setText("Погр.: ");
                 Nlabel.setText("N: "+ sol.getN());
 
                 field.setDisable(false);

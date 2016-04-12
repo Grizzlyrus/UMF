@@ -18,7 +18,7 @@ public class MainApp extends Application{
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("UMF");
-        this.primaryStage.setMinHeight(450.0);
+        this.primaryStage.setMinHeight(500.0);
         this.primaryStage.setMinWidth(650.0);
         initRootLayout();
         showDataOverview();
