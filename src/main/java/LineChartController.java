@@ -28,7 +28,8 @@ public class LineChartController {
 
     private Stage LineChartStage;
     private Solution sol;
-    private Progonka prog;
+//    private ImplicitScheme prog;
+    private ExplicitScheme prog;
 
     private double currentT = -1.0;
     private double CurCalcNX = 0.0;
@@ -129,9 +130,17 @@ public class LineChartController {
 //        sol.CalcN();
         this.sol = sol;
 
-        Progonka prog = new Progonka(l,D,H,Beta);
-        this.prog=prog;
+//        ImplicitScheme prog = new ImplicitScheme(l,D,H,Beta);
+//        this.prog=prog;
 
+        ExplicitScheme exscheme = new ExplicitScheme(l,D,H,Beta);
+        this.prog = exscheme;
+
+        Laba2_1 laba2 = new Laba2_1(l,D,H,Beta,10);
+        laba2.solution(10,5,10);
+        System.out.println("***************************************************");
+        Laba2_Tel laba2_1 = new Laba2_Tel(l,D,H,Beta,10);
+        laba2_1.solution(10,5,10);
     }
 
     @FXML
@@ -179,7 +188,13 @@ public class LineChartController {
             series1.setName("Ан. реш. t= " + t);
             ObservableList<XYChart.Data> datas = FXCollections.observableArrayList();
 
-            for (double i = 0; i < l; i += 0.05) {
+            double step;
+            if(prog.getI()== -1.0){
+                step = 0.05;
+            }else{
+                step = prog.getXstep();
+            }
+            for (double i = 0; i <= l; i += step) {
                 datas.add(new XYChart.Data(i, sol.U(i, t)));
             }
 
@@ -189,13 +204,13 @@ public class LineChartController {
         } else {
             prog.setCurT(t);
             curT.setText(((Double) t).toString());
-            double x[] = prog.solveMatrix();
+            double x[][] = prog.solveMatrix();
             XYChart.Series series2 = new XYChart.Series();
 
-            series2.setName("Числ. реш. t= " + t);
+            series2.setName("Явная схема t= " + t);
             ObservableList<XYChart.Data> datas = FXCollections.observableArrayList();
-            for(int i=0; i<x.length; i++){
-                datas.add(new XYChart.Data(i*prog.getXstep(),x[i]));
+            for(int i=0; i<x[k].length; i++){
+                datas.add(new XYChart.Data(i*prog.getXstep(),x[k][i]));
             }
             series2.setData(datas);
             Chart.getData().add(series2);

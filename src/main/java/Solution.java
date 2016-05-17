@@ -22,6 +22,7 @@ public class Solution {
         this.Beta=Beta;
     }
 
+
     public double Psi(double x){
         return 0.1*(Math.cos(Math.PI*x/l)+1);
     }
@@ -77,9 +78,6 @@ public class Solution {
     public double U(double x, double t){
         double sum = 0.0;
         for(int i=0;i<n;i++){
-//            if(uN(x,t,i)<0 && t==0){
-//                System.out.println("x="+x+"; t="+t+"; n="+i);
-//            }
             sum+=uN(x,t,i);
         }
         return sum;

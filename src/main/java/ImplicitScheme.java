@@ -1,7 +1,7 @@
 /**
  * Created by Admin on 04.03.2016.
  */
-public class Progonka {
+public class ImplicitScheme {
     private double l;
     private double D;
     private double H;
@@ -13,7 +13,7 @@ public class Progonka {
     private double curT;
     private double[][] P;
 
-    public Progonka(double l, double D, double H, double Beta) {
+    public ImplicitScheme(double l, double D, double H, double Beta) {
         this.l = l;
         this.D = D;
         this.H = H;
@@ -64,19 +64,25 @@ public class Progonka {
         P[I - 1][I - 1] = 1.0 / Tstep + 2.0 * D / (Xstep * Xstep) * (1.0 + Xstep * H) - Beta;
     }
 
-    public double[] solveMatrix() {
+    public double[][] solveMatrix() {
+
+
 
         this.genMatrix();
         double f[] = new double[I];
+        double result[][] = new double[K][I];
+
         if(Tstep == 0.0){
             for (int i = 0; i < I; i++) {
                 f[i] = 0.1 * (Math.cos(Math.PI * Xstep * (i + 1) / l) + 1);
             }
-        return f;
+            result[0] = f.clone();
+//        return f;
+        return result;
         }
 
         for (int i = 0; i < I; i++) {
-            f[i] = 0.1 * (Math.cos(Math.PI * Xstep * (i + 1) / l) + 1) / Tstep;
+            f[i] = 0.1 * (Math.cos(Math.PI * Xstep * (i +1) / l) + 1) / Tstep;
         }
 
         double c[] = new double[I];
@@ -114,11 +120,12 @@ public class Progonka {
             for (int i = I - 2; i >= 0; i--) {
                 x[i] = alpha[i + 1] * x[i + 1] + betha[i + 1];
             }
+            result[k] = x.clone();
 
             for (int i = 0; i < I; i++) {
                 f[i] = x[i] / Tstep;
             }
         }
-        return x;
+        return result;
     }
 }
