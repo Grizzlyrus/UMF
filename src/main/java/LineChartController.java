@@ -31,7 +31,6 @@ public class LineChartController {
 //    private ImplicitScheme prog;
     private ExplicitScheme prog;
 
-    private double currentT = -1.0;
     private double CurCalcNX = 0.0;
     private double CurCalcNT = 0.0;
     private ArrayList<Double> allTvalues = new ArrayList<>();
@@ -40,9 +39,29 @@ public class LineChartController {
 
     final ToggleGroup group1 = new ToggleGroup();
 
+    final ToggleGroup group2 = new ToggleGroup();
+
+
     boolean selector1 = true;
 
     boolean selector2 = true;
+
+    boolean selector3 = true;
+
+    @FXML
+    private TextField fieldxnew;
+
+    @FXML
+    private TextField fieldt0;
+
+    @FXML
+    private TextField fieldt1;
+
+    @FXML
+    private RadioButton RadBut5;
+
+    @FXML
+    private RadioButton RadBut6;
 
     @FXML
     private Label Xlabel;
@@ -56,8 +75,6 @@ public class LineChartController {
     @FXML
     private Label Nlabel;
 
-    @FXML
-    private javafx.scene.control.Label curT;
 
     @FXML
     private Button Button1;
@@ -136,11 +153,11 @@ public class LineChartController {
         ExplicitScheme exscheme = new ExplicitScheme(l,D,H,Beta);
         this.prog = exscheme;
 
-        Laba2_1 laba2 = new Laba2_1(l,D,H,Beta,10);
-        laba2.solution(10,5,10);
-        System.out.println("***************************************************");
-        Laba2_Tel laba2_1 = new Laba2_Tel(l,D,H,Beta,10);
-        laba2_1.solution(10,5,10);
+//        Laba2_1 laba2 = new Laba2_1(l,D,H,Beta,10);
+//        laba2.solution(10,5,10);
+//        System.out.println("***************************************************");
+//        Laba2_Tel laba2_1 = new Laba2_Tel(l,D,H,Beta,10);
+//        laba2_1.solution(10,5,10);
     }
 
     @FXML
@@ -149,14 +166,18 @@ public class LineChartController {
         RadBut3.setToggleGroup(group1);
         RadBut4.setToggleGroup(group1);
 
-
+        RadBut5.setSelected(true);
+        RadBut5.setToggleGroup(group2);
+        RadBut6.setToggleGroup(group2);
 
         field.setDisable(true);
+        fieldxnew.setDisable(true);
+        fieldt0.setDisable(true);
+        fieldt1.setDisable(true);
         Button2.setDisable(true);
         Button1.setDisable(true);
         Chart.setCreateSymbols(false);
         Chart.setTitle("U(x,t)");
-        curT.setText("");
         RadBut1.setToggleGroup(group);
         RadBut2.setToggleGroup(group);
         RadBut1.setSelected(true);
@@ -181,8 +202,8 @@ public class LineChartController {
 
 
     public void initGraph(double t, boolean sel) {
+
         if (sel) {
-            curT.setText(((Double) t).toString());
             XYChart.Series series1 = new XYChart.Series();
 
             series1.setName("Ан. реш. t= " + t);
@@ -203,7 +224,6 @@ public class LineChartController {
             Chart.getData().add(series1);
         } else {
             prog.setCurT(t);
-            curT.setText(((Double) t).toString());
             double x[][] = prog.solveMatrix();
             XYChart.Series series2 = new XYChart.Series();
 
@@ -215,6 +235,25 @@ public class LineChartController {
             series2.setData(datas);
             Chart.getData().add(series2);
         }
+    }
+
+    public void initGraph(double x, double t0, double t1) {
+
+            XYChart.Series series1 = new XYChart.Series();
+
+            series1.setName("Ан. реш. x= " + x);
+            ObservableList<XYChart.Data> datas = FXCollections.observableArrayList();
+
+            double step=(t1-t0)/10000;
+
+            for (double i = t0; i <= t1; i += step) {
+                datas.add(new XYChart.Data(i, sol.U(x, i)));
+            }
+
+            series1.setData(datas);
+
+            Chart.getData().add(series1);
+
     }
 
 
@@ -234,15 +273,17 @@ public class LineChartController {
         RadBut3.setDisable(false);
         RadBut4.setDisable(false);
 
-        if(n!=0){
-            field.setDisable(false);
-            Button2.setDisable(false);
-            Button1.setDisable(false);
-        }else{
-            field.setDisable(true);
-            Button2.setDisable(true);
-            Button1.setDisable(true);
-        }
+
+            if (n != 0) {
+                field.setDisable(false);
+                Button2.setDisable(false);
+                Button1.setDisable(false);
+            } else {
+                field.setDisable(true);
+                Button2.setDisable(true);
+                Button1.setDisable(true);
+            }
+
     }
 
 
@@ -287,49 +328,113 @@ public class LineChartController {
     }
 
     @FXML
+    public void SetRadBut5Press() {
+        if(n!=0) {
+            field.setDisable(false);
+        }
+        fieldt0.setDisable(true);
+        fieldt1.setDisable(true);
+        fieldxnew.setDisable(true);
+
+        SetRadBut1Press();
+        RadBut1.setDisable(false);
+        RadBut2.setDisable(false);
+
+        if(!selector3){
+            this.ClearButtonPress();
+        }
+        selector3 = true;
+    }
+
+    @FXML
+    public void SetRadBut6Press() {
+        field.setDisable(true);
+        if(n!=0) {
+            fieldt0.setDisable(false);
+            fieldt1.setDisable(false);
+            fieldxnew.setDisable(false);
+        }
+
+        RadBut1.setDisable(true);
+        RadBut2.setDisable(true);
+
+        if(selector3){
+            this.ClearButtonPress();
+        }
+        selector3 = false;
+    }
+
+    @FXML
     public void DrawButtonPress(){
         Double t;
-        try {
-            t = new Double(field.getCharacters().toString());
-            if(!isFind(-10) && t>=0 && selector1) {
-                currentT = t;
-                allTvalues.add(t);
-                initGraph(t, selector1);
-            } else if (!isFind(-10) && t>=0 && !selector1){
-                initGraph(t, selector1);
-            }
-            else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Double t0;
+        Double t1;
+        Double x;
+
+        if(selector3) {
+            try {
+                t = new Double(field.getCharacters().toString());
+                if (t >= 0 && selector1) {
+
+                    allTvalues.add(t);
+                    initGraph(t, selector1);
+                } else if (t >= 0 && !selector1) {
+                    initGraph(t, selector1);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Inputting value is negative or already exists");
+                    alert.setContentText("Please, press OK and try again");
+                    alert.showAndWait();
+                    field.clear();
+                }
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setHeaderText("Inputting value is negative or already exists");
+                alert.setHeaderText("Inputting value must be a number");
                 alert.setContentText("Please, press OK and try again");
                 alert.showAndWait();
                 field.clear();
             }
-        }catch (NumberFormatException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Inputting value must be a number");
-            alert.setContentText("Please, press OK and try again");
-            alert.showAndWait();
-            field.clear();
+        }else {
+            try {
+                t0 = new Double(fieldt0.getCharacters().toString());
+                t1 = new Double(fieldt1.getCharacters().toString());
+                x = new Double(fieldxnew.getCharacters().toString());
+                if (t0 >= 0 && t1 > t0&& x>0 &&x<l) {
+
+                    initGraph(x,t0,t1);
+
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Inputting value is negative or already exists");
+                    alert.setContentText("Please, press OK and try again");
+                    alert.showAndWait();
+                    fieldt0.clear();
+                    fieldt1.clear();
+                    fieldxnew.clear();
+
+                }
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Inputting value must be a number");
+                alert.setContentText("Please, press OK and try again");
+                alert.showAndWait();
+                fieldt0.clear();
+                fieldt1.clear();
+                fieldxnew.clear();
+            }
         }
     }
 
-    private boolean isFind(double value){
-        for (Double val:allTvalues){
-            if (val == value){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     @FXML
     public void ClearButtonPress(){
         allTvalues.clear();
         field.clear();
-        curT.setText("");
         Chart.getData().clear();
     }
 
@@ -392,15 +497,29 @@ public class LineChartController {
             n = new Integer(FieldN.getCharacters().toString());
 
             if(n>0) {
-                sol.setN(n);
-                Xlabel.setText("X: ");
-                Tlabel.setText("T: ");
-                Errorlabel.setText("Погр.: ");
-                Nlabel.setText("N: "+ sol.getN());
+                if(selector3) {
+                    sol.setN(n);
+                    Xlabel.setText("X: ");
+                    Tlabel.setText("T: ");
+                    Errorlabel.setText("Погр.: ");
+                    Nlabel.setText("N: " + sol.getN());
 
-                field.setDisable(false);
-                Button2.setDisable(false);
-                Button1.setDisable(false);
+                    field.setDisable(false);
+                    Button2.setDisable(false);
+                    Button1.setDisable(false);
+                }else{
+                    sol.setN(n);
+                    Xlabel.setText("X: ");
+                    Tlabel.setText("T: ");
+                    Errorlabel.setText("Погр.: ");
+                    Nlabel.setText("N: " + sol.getN());
+
+                    fieldxnew.setDisable(false);
+                    fieldt0.setDisable(false);
+                    fieldt1.setDisable(false);
+                    Button2.setDisable(false);
+                    Button1.setDisable(false);
+                }
 
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
